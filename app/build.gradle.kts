@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     kotlin("android")
-    id("dagger.hilt.android.plugin")
     id("kotlin-kapt")
 }
 
@@ -51,15 +50,15 @@ dependencies {
     implementation(Compose.compiler)
     implementation(Compose.ui)
     implementation(Compose.uiToolingPreview)
-    implementation(Compose.hiltNavigationCompose)
     implementation(Compose.material)
     implementation(Compose.runtime)
     implementation(Compose.navigation)
     implementation(Compose.viewModelCompose)
     implementation(Compose.activityCompose)
 
-    implementation(DaggerHilt.hiltAndroid)
-    kapt(DaggerHilt.hiltCompiler)
+    implementation(Koin.koinNavigation)
+    implementation(Koin.koinAndroidCompose)
+    implementation(Koin.koinAndroid)
 
     implementation(project(Modules.core))
     implementation(project(Modules.coreUI))
@@ -102,7 +101,5 @@ dependencies {
     androidTestImplementation(Testing.composeUiTest)
     androidTestImplementation(Testing.mockkAndroid)
     androidTestImplementation(Testing.mockWebServer)
-    androidTestImplementation(Testing.hiltTesting)
-    kaptAndroidTest(DaggerHilt.hiltCompiler)
     androidTestImplementation(Testing.testRunner)
 }
