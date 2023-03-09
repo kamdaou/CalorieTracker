@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_not_100_percent">The values must add up to 100%</string>
+    <string name="error_invalid_values">These are not valid values</string>
+</resources>

@@ -7,7 +7,7 @@ import com.example.core.domain.model.GoalType
 import com.example.core.domain.model.UserInfo
 import com.example.core.domain.preferences.IPreferences
 
-class DefaultPreferencesImpl(val sharedPref: SharedPreferences) : IPreferences {
+class DefaultPreferencesImpl(private val sharedPref: SharedPreferences) : IPreferences {
     override fun saveAge(age: Int) {
         sharedPref.edit()
             .putInt(IPreferences.AGE_KEY, age)
