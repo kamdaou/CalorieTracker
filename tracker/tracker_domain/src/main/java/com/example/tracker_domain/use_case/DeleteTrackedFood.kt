@@ -5,12 +5,13 @@ import com.example.tracker_domain.repository.ITrackerRepository
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 
-class GetFoodForDate(
+class DeleteTrackedFood(
     private val trackerRepository: ITrackerRepository
 ) {
-    operator fun invoke(
-        date: LocalDate
-    ): Flow<List<TrackedFood>> {
-        return trackerRepository.getFoodsForDate(date)
+    suspend operator fun invoke(
+        trackedFood: TrackedFood
+    ) {
+        TrackedFood::class.java.simpleName
+        return trackerRepository.deleteTrackedFood(trackedFood)
     }
 }
