@@ -86,4 +86,22 @@ class DefaultPreferencesImpl(private val sharedPref: SharedPreferences) : IPrefe
             )
         )
     }
+
+    override fun saveShouldShowOnBoarding(shouldShowOnBoarding: Boolean) {
+        sharedPref
+            .edit()
+            .putBoolean(
+                IPreferences.SHOULD_SHOW_ON_BOARDING,
+                shouldShowOnBoarding
+            )
+            .apply()
+    }
+
+    override fun loadShouldShowOnBoarding(): Boolean {
+        return sharedPref
+            .getBoolean(
+                IPreferences.SHOULD_SHOW_ON_BOARDING,
+                true
+            )
+    }
 }

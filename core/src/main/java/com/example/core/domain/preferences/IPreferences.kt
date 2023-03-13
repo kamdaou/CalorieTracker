@@ -18,6 +18,9 @@ interface IPreferences {
 
     fun loadUserInfos(): UserInfo
 
+    fun saveShouldShowOnBoarding(shouldShowOnBoarding: Boolean)
+    fun loadShouldShowOnBoarding(): Boolean
+
     companion object {
         const val AGE_KEY = "age_key"
         const val WEIGHT_KEY = "weight_key"
@@ -28,5 +31,6 @@ interface IPreferences {
         const val GENDER_KEY = "gender_key"
         const val GOAL_TYPE_KEY = "goal_type_key"
         const val ACTIVITY_LEVEL_KEY = "activity_level_key"
+        const val SHOULD_SHOW_ON_BOARDING = "should_show_onboarding"
     }
 }
