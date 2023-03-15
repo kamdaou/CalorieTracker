@@ -1,5 +1,6 @@
 package com.example.tracker_data.local
 
+import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
@@ -7,6 +8,7 @@ import androidx.room.Query
 import com.example.tracker_data.local.entity.TrackedFoodEntity
 import kotlinx.coroutines.flow.Flow
 
+@Dao
 interface TrackerDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -17,7 +19,7 @@ interface TrackerDao {
 
     @Query("""
         SELECT *
-        FROM trackedfoodentity
+        FROM TrackedFoodEntity
         WHERE dayOfMonth = :dayOfMonth AND month = :month AND year = :year
     """)
     fun searchFood(
