@@ -10,11 +10,9 @@ sealed class SearchEvent {
         val mealType: MealType,
         val date: LocalDate
     ) : SearchEvent()
-    data class OnFocusChange(val isFocused: Boolean) : SearchEvent()
+    data class OnFocusChanged(val isFocused: Boolean) : SearchEvent()
     data class OnQueryChange(
         val query: String,
-        val mealType: MealType,
-        val date: LocalDate
     ) : SearchEvent()
 
     data class OnToggleTrackableFood(val trackableFood: TrackableFood) : SearchEvent()

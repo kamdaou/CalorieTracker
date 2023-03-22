@@ -30,6 +30,7 @@ class TrackerOverviewViewModel(
     private var getFoodsForDateJob: Job? = null
 
     init {
+        refreshFoods()
         preferences.saveShouldShowOnBoarding(false)
     }
 

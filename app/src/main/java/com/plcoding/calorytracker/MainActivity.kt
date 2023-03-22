@@ -7,9 +7,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.core.data.DefaultPreferencesImpl
+import com.example.core.domain.preferences.IPreferences
 import com.example.core.navigation.Route
 import com.example.onboarding_presentation.activity.ActivityScreen
 import com.example.onboarding_presentation.age.AgeScreen
@@ -19,13 +23,19 @@ import com.example.onboarding_presentation.height.HeightScreen
 import com.example.onboarding_presentation.nutrient_goal.NutrientGoalScreen
 import com.example.onboarding_presentation.weight.WeightScreen
 import com.example.onboarding_presentation.welcome.WelcomeScreen
+import com.example.tracker_presentation.search.SearchScreen
 import com.example.tracker_presentation.tracker_overview.TrackerOverviewScreen
 import com.plcoding.calorytracker.navigation.navigate
 import com.plcoding.calorytracker.ui.theme.CaloryTrackerTheme
+import org.koin.android.ext.android.inject
+import org.koin.androidx.compose.inject
 
 class MainActivity : ComponentActivity() {
+
+    private val preferences: IPreferences by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val shouldShowBoolean = preferences.loadShouldShowOnBoarding()
         setContent {
             CaloryTrackerTheme {
                 val navController = rememberNavController()
@@ -34,7 +44,12 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     scaffoldState = scaffoldState
                 ) {
-                    NavHost(navController = navController, startDestination = Route.WELCOME) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = if (shouldShowBoolean) {
+                            Route.WELCOME
+                        } else Route.TRACKER_OVERVIEW
+                    ) {
                         composable(Route.WELCOME) {
                             WelcomeScreen(navController::navigate)
                         }
@@ -74,8 +89,43 @@ class MainActivity : ComponentActivity() {
                         composable(Route.TRACKER_OVERVIEW) {
                             TrackerOverviewScreen(onNavigate = navController::navigate)
                         }
-                        composable(Route.SEARCH) {
-
+                        composable(
+                            route = Route.SEARCH + "/{mealName}/{dayOfMonth}/{month}/{year}",
+                            arguments = listOf(
+                                navArgument(
+                                    name = "mealName"
+                                ) {
+                                    type = NavType.StringType
+                                },
+                                navArgument(
+                                    name = "dayOfMonth"
+                                ) {
+                                    type = NavType.IntType
+                                },
+                                navArgument(
+                                    name = "month"
+                                ) {
+                                    type = NavType.IntType
+                                },
+                                navArgument(
+                                    name = "year"
+                                ) {
+                                    type = NavType.IntType
+                                },
+                            )
+                        ) {
+                            val dayOfMonth = it.arguments?.getInt("dayOfMonth")!!
+                            val month = it.arguments?.getInt("month")!!
+                            val year = it.arguments?.getInt("year")!!
+                            val mealName = it.arguments?.getString("mealName")!!
+                            SearchScreen(
+                                scaffoldState = scaffoldState,
+                                onNavigateUp = { navController.navigateUp() },
+                                dayOfMonth = dayOfMonth,
+                                month = month,
+                                year = year,
+                                mealName = mealName
+                            )
                         }
                     }
                 }

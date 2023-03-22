@@ -2,14 +2,12 @@ package com.example.tracker_presentation.search
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.use_cases.FilterOutDigits
 import com.example.core.util.UiEvent
 import com.example.core.util.UiText
-import com.example.tracker_domain.model.TrackableFood
 import com.example.tracker_domain.use_case.TrackerUseCases
 import com.example.tracker_presentation.R
 import kotlinx.coroutines.channels.Channel
@@ -44,7 +42,7 @@ class SearchViewModel(
                 )
             }
 
-            is SearchEvent.OnFocusChange -> {
+            is SearchEvent.OnFocusChanged -> {
                 state = state.copy(
                     isHintVisible = state.query.isBlank() && !event.isFocused
                 )
@@ -58,6 +56,7 @@ class SearchViewModel(
 
             is SearchEvent.OnTrackFoodClick -> {
                 trackFood(event)
+
             }
 
             is SearchEvent.OnToggleTrackableFood -> {
@@ -85,6 +84,7 @@ class SearchViewModel(
                 mealType = event.mealType,
                 date = event.date
             )
+            _uiEvent.send(UiEvent.NavigateUp)
         }
     }
 
