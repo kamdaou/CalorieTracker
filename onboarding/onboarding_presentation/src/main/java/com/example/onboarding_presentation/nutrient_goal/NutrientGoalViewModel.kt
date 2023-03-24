@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.preferences.IPreferences
 import com.example.core.domain.use_cases.FilterOutDigits
-import com.example.core.navigation.Route
 import com.example.core.util.UiEvent
 import com.example.onboarding_domain.use_case.ValidateNutrients
 import kotlinx.coroutines.channels.Channel
@@ -56,7 +55,7 @@ class NutrientGoalViewModel(
                         sharedPref.saveFatRatio(result.fatsRatio)
                         viewModelScope.launch {
                             _uiEvent.send(
-                                UiEvent.Navigate(Route.TRACKER_OVERVIEW)
+                                UiEvent.Navigate
                             )
                         }
                     }

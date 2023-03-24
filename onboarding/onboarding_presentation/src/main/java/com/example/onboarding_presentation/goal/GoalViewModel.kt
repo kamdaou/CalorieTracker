@@ -7,7 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.model.GoalType
 import com.example.core.domain.preferences.IPreferences
-import com.example.core.navigation.Route
 import com.example.core.util.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -23,7 +22,7 @@ class GoalViewModel(private val preferences: IPreferences): ViewModel() {
     fun onNextClicked() {
         viewModelScope.launch {
             preferences.saveGoalType(selectedGoal)
-            _uiEvent.send(UiEvent.Navigate(Route.NUTRIENT_GOAL))
+            _uiEvent.send(UiEvent.Navigate)
         }
     }
 

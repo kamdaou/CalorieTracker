@@ -49,8 +49,8 @@ fun AddButton(
     ) {
         Icon(
             imageVector = Icons.Default.Add,
-            contentDescription = stringResource(id = R.string.add_meal),
-            tint = color
+            tint = color,
+            contentDescription = text,
         )
         Spacer(Modifier.width(spacing.medium))
         Text(

@@ -24,7 +24,17 @@ class TrackerRepositoryImpl(
         return try {
             val result = api.searchFood(
                 query, page, pageSize
-            ).products.mapNotNull { product ->
+            ).products
+                .filter {
+                    val calculateCalories =
+                        it.nutriments.carbohydrates100g * 4f +
+                                it.nutriments.proteins100g * 4f +
+                                it.nutriments.fat100g * 4f
+                    val lowerBound = calculateCalories * 0.99f
+                    val upperBound = calculateCalories * 1.01f
+                    it.nutriments.energyKcal100g in lowerBound..upperBound
+                }
+                .mapNotNull { product ->
                 product.toTrackableFood()
             }
             Result.success(result)

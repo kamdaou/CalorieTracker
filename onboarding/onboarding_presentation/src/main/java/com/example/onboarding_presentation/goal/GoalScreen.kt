@@ -18,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import com.example.core.domain.model.ActivityLevel
 import com.example.core.domain.model.GoalType
 import com.example.core.util.UiEvent
 import com.example.core_ui.LocalSpacing
@@ -30,7 +29,7 @@ import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun GoalScreen(
-    onNavigate: (UiEvent.Navigate) -> Unit,
+    onNextClick: () -> Unit,
 ) {
     val viewModel = getViewModel<GoalViewModel>()
     val spacing = LocalSpacing.current
@@ -38,7 +37,7 @@ fun GoalScreen(
     LaunchedEffect(key1 = true) {
         viewModel.uiEvent.collect { event ->
             when (event) {
-                is UiEvent.Navigate -> onNavigate(event)
+                is UiEvent.Navigate -> onNextClick()
                 else -> Unit
             }
         }

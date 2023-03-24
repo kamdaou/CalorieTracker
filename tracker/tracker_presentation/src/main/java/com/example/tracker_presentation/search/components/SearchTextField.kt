@@ -22,10 +22,10 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.core_ui.LocalSpacing
 import com.example.tracker_presentation.R
@@ -68,6 +68,7 @@ fun SearchTextField(
                 .onFocusChanged {
                     onFocusChanged(it)
                 }
+                .testTag("search_textfield")
         )
         if (shouldShowHint) {
             Text(

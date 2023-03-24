@@ -6,14 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.preferences.IPreferences
-import com.example.core.navigation.Route
-import com.example.core.util.UiEvent
 import com.example.tracker_domain.use_case.TrackerUseCases
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class TrackerOverviewViewModel(
@@ -24,9 +20,6 @@ class TrackerOverviewViewModel(
     var state by mutableStateOf(TrackerOverviewState())
         private set
 
-    private var _uiEvent = Channel<UiEvent>()
-    val uiEvent = _uiEvent.receiveAsFlow()
-
     private var getFoodsForDateJob: Job? = null
 
     init {
@@ -36,19 +29,7 @@ class TrackerOverviewViewModel(
 
     fun onEvent(event: TrackerOverviewEvents) {
         when(event) {
-            is TrackerOverviewEvents.OnAddFoodClick -> {
-                viewModelScope.launch {
-                    _uiEvent.send(
-                        UiEvent.Navigate(
-                            route = Route.SEARCH
-                                    + "/${event.meal.mealType.name}"
-                                    + "/${state.date.dayOfMonth}"
-                                    + "/${state.date.monthValue}"
-                                    + "/${state.date.year}"
-                        )
-                    )
-                }
-            }
+
             is TrackerOverviewEvents.OnDeleteFood -> {
                 viewModelScope.launch {
                     trackerUseCases.deleteTrackedFood(event.trackedFood)
